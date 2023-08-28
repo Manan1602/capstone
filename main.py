@@ -39,6 +39,7 @@ sweep_config['parameters'] = Config
 import os
 from tqdm import tqdm
 import torch
+from madgrad import MADGRAD
 import cv2
 import torch.nn as nn
 from torchvision import transforms
@@ -126,6 +127,7 @@ def run(config = None):
     device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
     loss = SupConLoss()
     optim = torch.optim.Adam(model_embed.parameters(), lr = config.lr)
+    optim = torch.optim.Adam(model_embed.parameters(), lr = config.lr, weight_decay=config.weight_decay) if config.optimizer == 'Adam' else MADGRAD(model_embed.parameters(), lr = config.lr, weight_decay=config.weight_decay)
 
     epochs = config.epochs
     best_val_loss = float('inf')

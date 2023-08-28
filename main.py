@@ -141,7 +141,8 @@ def run(config = None):
             best_val_loss = val_loss
             best_model = model_embed
         print(f'train loss: {train_loss}\t\t val loss: {val_loss}')
-        print('-----------------------------------------------------')
+        print('-------------------------------------------------------------')
 
     torch.save(model_embed,'model_embed_last.pt')
     torch.save(best_model,'model_embed_best.pt')
+wandb.agent(sweep_id, run)
